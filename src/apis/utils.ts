@@ -1,13 +1,46 @@
-export const fetchJson = (url, option) => fetch(url, {
-    ...option,
-    headers: {
-      ...option.headers,
-      'Content-Type': 'application/json; charset=utf-8',
-    },
-  })
-  .then(response => {
-    if (response.status < 400) {
-      return response.json()
+import userStorage from '../utils/storage'
+
+const baseUrl = 'http://secondhand.leanapp.cn'
+
+export const fetchApi = (serviceUrl, options?, omitContentType?) => {
+    const url = `${baseUrl}${serviceUrl}`
+    const token = userStorage.getToken()
+
+    let headers
+    if (omitContentType) {
+        headers = new Headers({
+            method: 'GET',
+            Accept: 'application/json',
+            ...(token ? { 'sessionToken': token } : {}),
+        })
+    } else {
+        headers = new Headers({
+            method: 'GET',
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            ...(token ? { 'sessionToken': token } : {}),
+        })
     }
-    throw response
-  })
+
+    const finalConfig = {
+        headers,
+        ...options,
+    }
+
+    let status
+
+    return fetch(url, finalConfig)
+        .then(response => {
+            status = response.status
+            return response.json()
+        }).then(
+            json => {
+                if (status < 400) {
+                    return json
+                }
+                throw json
+            },
+            ({message}) => {
+                throw {message}
+            })
+}

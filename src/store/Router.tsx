@@ -1,51 +1,65 @@
 import * as React from 'react'
+import { Image, StyleSheet } from 'react-native'
 import {
   NavigationActions,
   TabNavigator,
 } from 'react-navigation'
-import Ionicons from 'react-native-vector-icons/Ionicons'
+import colors from '../common/colors'
 
 import HomeScreen from '../containers/pages/HomeScreen'
 import OthersScreen from '../containers/pages/OthersScreen'
 import ProfileScreen from '../containers/pages/ProfileScreen'
 
+const styles = StyleSheet.create({
+  icon: {
+    width: 26,
+    height: 26
+  },
+  circle: {
+    padding: 8,
+    backgroundColor: colors.white,
+    borderColor: colors.white,
+    borderRadius: 21,
+    overflow: 'hidden',
+    borderWidth: 13,
+  },
+  circleFocused: {
+    borderColor: colors.yellow,
+    backgroundColor: colors.yellow
+  }
+})
+
 const Route = TabNavigator({
   home: {
     screen: HomeScreen,
     navigationOptions: {
-      tabBarLabel: 'Home',
-      tabBarIcon: ({ tintColor, focused }) => (
-        <Ionicons
-          name={focused ? 'ios-home' : 'ios-home-outline'}
-          size={26}
-          style={{ color: tintColor }}
-        />
+      tabBarIcon: ({ tintColor }) => (
+          <Image
+              source={require('../common/assets/home.png')}
+              style={[styles.icon, {tintColor: tintColor}]}
+          />
       ),
     },
   },
   others: {
     screen: OthersScreen,
     navigationOptions: {
-      tabBarLabel: 'Others',
       tabBarIcon: ({ tintColor, focused }) => (
-        <Ionicons
-          name={focused ? 'ios-settings' : 'ios-settings-outline'}
-          size={26}
-          style={{ color: tintColor }}
-        />
+          <Image
+              source={require('../common/assets/plus.png')}
+              style={[styles.icon, styles.circle, {tintColor: tintColor}, focused ? styles.circleFocused : {}]}
+          />
       ),
     },
   },
   profile: {
     screen: ProfileScreen,
     navigationOptions: {
-      tabBarLabel: 'Profile',
       tabBarIcon: ({ tintColor, focused }) => (
-        <Ionicons
-          name={focused ? 'ios-apps' : 'ios-apps-outline'}
-          size={26}
-          style={{ color: tintColor }}
-        />
+          <Image
+              source={require('../common/assets/person.png')}
+              style={[styles.icon, {tintColor: tintColor}]}
+          />
       ),
     },
   },
@@ -54,6 +68,17 @@ const Route = TabNavigator({
   tabBarPosition: 'bottom',
   animationEnabled: true,
   swipeEnabled: true,
+  tabBarOptions : {
+    style: {
+      backgroundColor: colors.yellow,
+      borderTopWidth: 0,
+      overflow: 'hidden',
+    },
+    activeBackgroundColor: colors.white,
+    inactiveTintColor: colors.black,
+    activeTintColor: colors.black,
+    showLabel: false
+  }
 })
 
 const initialRouterAction = NavigationActions.init()
