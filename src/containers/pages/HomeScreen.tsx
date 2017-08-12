@@ -9,8 +9,8 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
-  },
+    justifyContent: 'center'
+  }
 })
 
 class HomeScreen extends React.Component<DispatchProp<{}>, {}> {
@@ -19,9 +19,9 @@ class HomeScreen extends React.Component<DispatchProp<{}>, {}> {
       <View style={styles.container}>
         <Text>Home !</Text>
         <Button
-          title="Go to Others"
+          title="Go to Release"
           onPress={() => {
-            this.props.dispatch(NavigationActions.navigate({ routeName: 'others' }))
+            this.props.dispatch(NavigationActions.navigate({ routeName: 'release' }))
           }}
         />
       </View>
