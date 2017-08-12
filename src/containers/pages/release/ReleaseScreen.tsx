@@ -1,9 +1,9 @@
 import * as React from 'react'
-import { StyleSheet, Text, View, Image, TextInput } from 'react-native'
+import { Text, View, Image, TextInput } from 'react-native'
 import { connect, DispatchProp } from 'react-redux'
 import { Button } from 'react-native-elements'
-import * as D from '../../definitions'
-import { height, width } from 'react-native-dimension'
+import * as D from '../../,,/../../definitions'
+import styles from './ReleaseScreen.style'
 
 type ReleaseScreenProps<S> = DispatchProp<S> & {
   user: D.UserState
@@ -15,56 +15,6 @@ interface State {
   price: string
   description: string
 }
-
-const styles = StyleSheet.create({
-  container: {
-    marginTop: 30,
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'flex-start'
-  },
-  input: {
-    borderBottomWidth: 1,
-    borderColor: '#D1D1D1',
-    fontSize: 16,
-    width: width(80),
-    marginBottom: 20
-  },
-  header: {
-    fontSize: 17,
-    fontWeight: 'bold',
-    marginBottom: 10
-  },
-  uploadContainer: {
-    flex: 1
-  },
-  uploadContent: {
-    backgroundColor: '#FAF7F7',
-    flex: 1,
-    width: width(100),
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  uploadImage: {
-    width: 50,
-    height: 50
-  },
-  productDetail: {
-    flex: 2,
-    alignItems: 'center'
-  },
-  productDesc: {
-    borderWidth: 1,
-    height: 150
-  },
-  releaseBtnContainer: {
-    flex: 1
-  },
-  releaseBtn: {
-    width: 200
-  }
-})
 
 class ReleaseScreen extends React.Component<ReleaseScreenProps<object>, State> {
   constructor(props: ReleaseScreenProps<object>) {
@@ -109,7 +59,7 @@ class ReleaseScreen extends React.Component<ReleaseScreenProps<object>, State> {
           : <View style={styles.uploadContainer}>
               <View style={styles.uploadContent}>
                 <Text>点击上传图片</Text>
-                <Image style={styles.uploadImage} source={require('../../common/assets/arrow_up_upload.png')} />
+                <Image style={styles.uploadImage} source={require('../../../common/assets/arrow_up_upload.png')} />
               </View>
               <TextInput onChange={this.handleImageChange} />
             </View>}

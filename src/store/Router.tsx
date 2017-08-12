@@ -6,7 +6,7 @@ import colors from '../common/colors'
 import HomeScreen from '../containers/pages/HomeScreen'
 import OthersScreen from '../containers/pages/OthersScreen'
 import ProfileScreen from '../containers/pages/ProfileScreen'
-import ReleaseScreen from '../containers/pages/ReleaseScreen'
+import ReleaseScreen from '../containers/pages/release/ReleaseScreen'
 
 const styles = StyleSheet.create({
   icon: {
