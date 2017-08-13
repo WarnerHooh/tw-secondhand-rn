@@ -1,4 +1,5 @@
 import { Epic } from 'redux-most'
+import { NavigationActions } from 'react-navigation'
 import epicCreator from '../../utils/epicsCreator'
 
 import * as D from '../../definitions'
@@ -15,30 +16,32 @@ export const USER_LOGOUT_SUC = 'USER_LOGOUT_SUC'
 
 export const userRegister = (user: D.UserForRegister): D.UserAction => ({ type: USER_REGISTER, payload: user })
 
-export const userLogin = (user: D.UserForLogin, meta: D.MetaForLogin): D.UserAction => ({
+export const userLogin = (user: D.UserForLogin, meta?: D.MetaForLogin): D.UserAction => ({
     type: USER_LOGIN, payload: user, meta
 })
 
 export const userLogout = (): D.UserAction => ({ type: USER_LOGOUT })
 
-const registerEpic: Epic<D.GeneralAction> = epicCreator(USER_REGISTER, register)
+const registerEpic: Epic<D.GeneralAction> = epicCreator(USER_REGISTER, register, (store) => {
+  store.dispatch(NavigationActions.back())
+})
 
 const loginEpic: Epic<D.GeneralAction> = epicCreator(USER_LOGIN, login, (store, response, action) => {
-    userStorage.setUser(response).then(() => {
-        console.log('setUser')
-    })
+  userStorage.setUser(response).then(() => {
+    store.dispatch(NavigationActions.back())
+  })
 })
 
 const logoutCallback = (store) => {
-    userStorage.removeUser().then(() => {
-        console.log('removeUser')
-    })
+  userStorage.removeUser().then(() => {
+    store.dispatch(NavigationActions.navigate({ routeName: 'home' }))
+  })
 }
 
 const logoutEpic: Epic<D.GeneralAction> = epicCreator(USER_LOGOUT, logout, logoutCallback, logoutCallback)
 
 export const epics: Array<Epic<D.GeneralAction>> = [
-    registerEpic,
-    loginEpic,
-    logoutEpic,
+  registerEpic,
+  loginEpic,
+  logoutEpic,
 ]

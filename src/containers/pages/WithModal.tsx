@@ -1,6 +1,5 @@
 import * as React from 'react'
-import { View, Text, Image, StyleSheet } from 'react-native'
-import { Button, FormLabel, FormInput, FormValidationMessage } from 'react-native-elements'
+import { View, Text, StyleSheet } from 'react-native'
 import { connect, DispatchProp } from 'react-redux'
 import Icon from 'react-native-vector-icons/Ionicons'
 
@@ -17,11 +16,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 20,
   },
+  close: {
+    marginRight: -12,
+    zIndex: 1
+  },
   title: {
     fontSize: 16,
     fontWeight: 'bold',
     textAlign: 'center',
-    flex: 1
+    flex: 1,
   }
 })
 
@@ -38,7 +41,7 @@ class WithModal extends React.Component {
     return (
       <View style={styles.container}>
         <View style={styles.header}>
-          <Icon name="md-close" size={24} onPress={this.onDismiss} />
+          <Icon name="md-close" size={24} style={styles.close} onPress={this.onDismiss} />
           <Text style={styles.title}>{title}</Text>
         </View>
         {children}
@@ -50,13 +53,11 @@ class WithModal extends React.Component {
 const ConnectedWithModal = connect()(WithModal)
 
 export const withModal = (outerProps) => (InnerContent) => (
-  function ModalLayout(props) {
-    return (
+  (props) => (
       <ConnectedWithModal {...outerProps} {...props} >
         <InnerContent {...props} />
       </ConnectedWithModal>
-    )
-  }
+  )
 )
 
 export default ConnectedWithModal

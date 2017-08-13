@@ -22,8 +22,12 @@ class HomeScreen extends React.Component {
           title="Go to Release"
           onPress={() => {
             this.props.dispatch(NavigationActions.navigate({ routeName: 'release' }))
-            // this.props.dispatch(NavigationActions.navigate({ routeName: 'others' }))
-            // this.props.navigation.navigate('signin')
+          }}
+        />
+        <Button
+          title="Go to SignIn"
+          onPress={() => {
+            this.props.navigation.navigate('signin')
           }}
         />
       </View>

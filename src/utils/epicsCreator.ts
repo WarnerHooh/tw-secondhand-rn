@@ -9,7 +9,6 @@ export default (type, asyncFn, sucCallback?: Function|null, failCallback?: Funct
         .chain(action => {
             originalAction = action
             store.dispatch({type: `START`, meta: {asyncPhase: 'START'}})
-
             return fromPromise(
                 asyncFn(action.payload)
                     .then((res) => {

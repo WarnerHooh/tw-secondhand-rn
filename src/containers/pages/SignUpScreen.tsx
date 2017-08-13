@@ -1,7 +1,12 @@
 import * as React from 'react'
 import { View, Image, StyleSheet } from 'react-native'
 import { Button, FormLabel, FormInput, FormValidationMessage } from 'react-native-elements'
+import { bindActionCreators, compose } from 'redux'
+import { connect, DispatchProp } from 'react-redux'
+
 import { withModal } from './WithModal'
+import { withLoader } from './WithLoader'
+import { userRegister } from '../../modules/user/actions'
 import colors from '../../common/colors'
 
 const styles = StyleSheet.create({
@@ -14,7 +19,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     width: 100,
     height: 100,
-    marginTop: 100,
+    marginTop: 70,
     marginBottom: 30
   },
   formRow: {
@@ -95,7 +100,12 @@ class SignUpScreen extends React.Component {
 
     this.setState({fields}, () => {
       if (valid) {
-        // TODO ACTION
+        const { userSignUpAction } = this.props
+
+        userSignUpAction({
+          username: fields.username.value,
+          password: fields.password.value
+        })
       }
     })
   }
@@ -114,6 +124,7 @@ class SignUpScreen extends React.Component {
         <FormInput
           value={username.value}
           placeholder="用户名"
+          autoCapitalize="none"
           onChangeText={this.onChangeText('username')}
           style={[styles.formRow]}
         />
@@ -122,6 +133,7 @@ class SignUpScreen extends React.Component {
         <FormInput
           value={password.value}
           placeholder="密码"
+          autoCapitalize="none"
           secureTextEntry={true}
           onChangeText={this.onChangeText('password')}
           style={[styles.formRow]}
@@ -131,6 +143,7 @@ class SignUpScreen extends React.Component {
         <FormInput
           value={passwordConfirm.value}
           placeholder="确认密码"
+          autoCapitalize="none"
           secureTextEntry={true}
           onChangeText={this.onChangeText('passwordConfirm')}
           style={[styles.formRow]}
@@ -149,4 +162,12 @@ class SignUpScreen extends React.Component {
   }
 }
 
-export default withModal({title: '注册'})(SignUpScreen)
+const enhance =  compose(
+  withLoader(),
+  withModal({title: '注册'}),
+  connect(null, (dispatch) => ({
+    userSignUpAction: bindActionCreators(userRegister, dispatch)
+  }))
+)
+
+export default enhance(SignUpScreen)

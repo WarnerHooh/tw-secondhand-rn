@@ -1,8 +1,14 @@
 import * as React from 'react'
-import { View, Text, Image, StyleSheet } from 'react-native'
+import { View, Image, StyleSheet } from 'react-native'
 import { Button, FormLabel, FormInput, FormValidationMessage } from 'react-native-elements'
+import { bindActionCreators, compose } from 'redux'
+import { connect, DispatchProp } from 'react-redux'
+
 import colors from '../../common/colors'
+
 import { withModal } from './WithModal'
+import { withLoader } from './WithLoader'
+import { userLogin } from '../../modules/user/actions'
 
 const styles = StyleSheet.create({
   container: {
@@ -20,7 +26,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     width: 100,
     height: 100,
-    marginTop: 100,
+    marginTop: 70,
     marginBottom: 30
   },
   formRow: {
@@ -95,7 +101,12 @@ class SignInScreen extends React.Component {
 
     this.setState({fields}, () => {
       if (valid) {
-        // TODO ACTION
+        const { userSignInAction } = this.props
+
+        userSignInAction({
+          username: fields.username.value,
+          password: fields.password.value
+        })
       }
     })
   }
@@ -114,6 +125,7 @@ class SignInScreen extends React.Component {
         <FormInput
           value={username.value}
           placeholder="用户名"
+          autoCapitalize="none"
           onChangeText={this.onChangeText('username')}
           style={[styles.formRow]}
         />
@@ -122,6 +134,7 @@ class SignInScreen extends React.Component {
         <FormInput
           value={password.value}
           placeholder="密码"
+          autoCapitalize="none"
           secureTextEntry={true}
           onChangeText={this.onChangeText('password')}
           style={[styles.formRow]}
@@ -149,4 +162,12 @@ class SignInScreen extends React.Component {
   }
 }
 
-export default withModal({title: '登录'})(SignInScreen)
+const enhance =  compose(
+  withLoader(),
+  withModal({title: '登录'}),
+  connect(null, (dispatch) => ({
+    userSignInAction: bindActionCreators(userLogin, dispatch)
+  }))
+)
+
+export default enhance(SignInScreen)

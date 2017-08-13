@@ -2,9 +2,9 @@ import userStorage from '../utils/storage'
 
 const baseUrl = 'http://secondhand.leanapp.cn'
 
-export const fetchApi = (serviceUrl, options?, omitContentType?) => {
+export const fetchApi = async (serviceUrl, options?, omitContentType?) => {
     const url = `${baseUrl}${serviceUrl}`
-    const token = userStorage.getToken()
+    const token = await userStorage.getToken()
 
     let headers
     if (omitContentType) {
