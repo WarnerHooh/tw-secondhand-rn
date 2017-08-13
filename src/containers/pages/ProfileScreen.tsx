@@ -38,6 +38,7 @@ class ProfileScreen extends React.Component<ProfileProps<object>, object> {
           title="Go to Home"
           onPress={() => {
             this.props.dispatch(NavigationActions.navigate({ routeName: 'home' }))
+            // this.props.navigation.navigate('signin')
           }}
         />
         <Button
@@ -46,6 +47,7 @@ class ProfileScreen extends React.Component<ProfileProps<object>, object> {
             this.props.dispatch(NavigationActions.back())
           }}
         />
+
       </View>
     )
   }

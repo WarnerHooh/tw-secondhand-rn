@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
   }
 })
 
-class HomeScreen extends React.Component<DispatchProp<{}>, {}> {
+class HomeScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
@@ -22,6 +22,8 @@ class HomeScreen extends React.Component<DispatchProp<{}>, {}> {
           title="Go to Release"
           onPress={() => {
             this.props.dispatch(NavigationActions.navigate({ routeName: 'release' }))
+            // this.props.dispatch(NavigationActions.navigate({ routeName: 'others' }))
+            // this.props.navigation.navigate('signin')
           }}
         />
       </View>
