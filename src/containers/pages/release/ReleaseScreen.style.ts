@@ -1,6 +1,6 @@
-import { StyleSheet } from 'react-native'
-import { width } from 'react-native-dimension'
-import colors from '../../../common/colors'
+import { StyleSheet } from 'react-native';
+import { width } from 'react-native-dimension';
+import colors from '../../../common/colors';
 
 export default StyleSheet.create({
   container: {
@@ -37,6 +37,7 @@ export default StyleSheet.create({
     height: 50
   },
   productDetail: {
+    paddingTop: 20,
     flex: 2,
     alignItems: 'center'
   },
@@ -50,4 +51,4 @@ export default StyleSheet.create({
   releaseBtn: {
     width: 200
   }
-})
+});
