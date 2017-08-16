@@ -50,7 +50,9 @@ const TabRoute = TabNavigator(
           <Image
             source={require('../common/assets/plus.png')}
             style={[styles.icon, styles.circle, { tintColor: tintColor }, focused ? styles.circleFocused : {}]}
-          />
+          />,
+
+        tabBarVisible: false
       }
     },
     profile: {
@@ -64,7 +66,7 @@ const TabRoute = TabNavigator(
   {
     initialRouteName: 'home',
     tabBarPosition: 'bottom',
-    animationEnabled: true,
+    animationEnabled: false,
     swipeEnabled: true,
     tabBarOptions: {
       style: {

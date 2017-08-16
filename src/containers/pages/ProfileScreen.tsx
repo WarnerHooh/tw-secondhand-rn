@@ -26,6 +26,10 @@ const styles = StyleSheet.create({
 
 class ProfileScreen extends React.Component<ProfileProps<object>, object> {
 
+  static navigationOptions = {
+    tabBarVisible: false
+  }
+
   render() {
     return (
       <View style={styles.container}>

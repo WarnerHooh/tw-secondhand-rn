@@ -11,23 +11,31 @@ const styles = StyleSheet.create({
 class WithAuthorized extends React.Component {
 
   componentWillReceiveProps(nextProps) {
-    const nav = this.props.nav
-    const nextNav = nextProps.nav
+    const { user } = nextProps
 
-    const tabRoute = nav.routes[0]
-    const nextTabRoute = nextNav.routes[0]
+    if (!user.sessionToken) {
+      const nav = this.props.nav
+      const nextNav = nextProps.nav
 
-    if (tabRoute.index !== nextTabRoute.index
-      && (nextTabRoute.routes[nextTabRoute.index].routeName === this.props.navigation.state.routeName)) {
-      this.props.navigation.navigate('signin')
+      const tabRoute = nav.routes[0]
+      const nextTabRoute = nextNav.routes[0]
+
+      if (tabRoute.index !== nextTabRoute.index
+        && (nextTabRoute.routes[nextTabRoute.index].routeName === this.props.navigation.state.routeName)) {
+        this.props.navigation.navigate('signin')
+      }
     }
   }
 
   render() {
-    const { children } = this.props
+    const { children, user } = this.props
     return (
       <View style={styles.container}>
-        {children}
+        {
+          user.sessionToken
+          ? children
+          : null
+        }
       </View>
     )
   }

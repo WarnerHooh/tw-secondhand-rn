@@ -16,7 +16,8 @@ async function removeUser() {
 }
 
 async function getUser() {
-  return await asyncStorage.load()
+  const user = await asyncStorage.load()
+  return user
 }
 
 async function getToken() {
