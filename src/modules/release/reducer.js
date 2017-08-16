@@ -8,16 +8,20 @@ const initialState = {
     name: '',
     price: '',
     img: '',
-    description: '',
-    owner: null,
-    objectId: ''
+    description: ''
   }
 };
 
 export default handleActions(
   {
     [actionCreators.release.product.sale.start]: (state, action) => {
-      return merge.recursive(true, state, { product: action.payload });
+      // return merge.recursive(true, state, { product: action.payload });
+    },
+    [actionCreators.release.product.sale.success]: (state, action) => {
+      // return merge.recursive(true, state, { product: action.payload });
+    },
+    [actionCreators.release.product.sale.failed]: (state, action) => {
+      // return merge.recursive(true, state, { product: action.payload });
     },
     [actionCreators.release.product.name.change]: (state, action) => {
       return merge.recursive(true, state, { product: { name: action.payload } });

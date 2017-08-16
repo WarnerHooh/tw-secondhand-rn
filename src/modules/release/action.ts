@@ -5,7 +5,9 @@ const actionCreators = createActions({
   RELEASE: {
     PRODUCT: {
       SALE: {
-        START: PAYLOAD_AND_META_CREATOR
+        START: PAYLOAD_AND_META_CREATOR,
+        SUCCESS: PAYLOAD_AND_META_CREATOR,
+        FAILED: PAYLOAD_AND_META_CREATOR
       },
       NAME: {
         CHANGE: PAYLOAD_AND_META_CREATOR
