@@ -11,7 +11,8 @@ import actionCreators from '../../../modules/release/action';
 
 interface ReleaseScreenProps {
   product: D.Product;
-  onStartSaleClick(product: D.Product): void;
+  user: D.User;
+  onStartSaleClick(user: D.User, product: D.Product): void;
   onNameChange(name: string): void;
   onPriceChange(price: string): void;
   onDescriptionChange(desc: string): void;
@@ -53,7 +54,7 @@ class ReleaseScreen extends React.Component<ReleaseScreenProps> {
             buttonStyle={styles.releaseBtn}
             title="开始出售"
             onPress={() => {
-              this.props.onStartSaleClick(this.props.product);
+              this.props.onStartSaleClick(this.props.user, this.props.product);
             }}
           />
         </View>
@@ -67,10 +68,12 @@ const enhance = compose(
   withModal({ title: '发布宝贝' }),
   connect(
     (state, ownProps) => ({
-      product: state.release.product
+      product: state.release.product,
+      user: state.user
     }),
     (dispatch, ownProps) => ({
-      onStartSaleClick: (product: D.Product) => dispatch(actionCreators.release.product.sale.start(product)),
+      onStartSaleClick: (user: D.User, product: D.Product) =>
+        dispatch(actionCreators.release.product.sale.start(user, product)),
       onNameChange: name => dispatch(actionCreators.release.product.name.change(name)),
       onPriceChange: price => dispatch(actionCreators.release.product.price.change(price)),
       onDescriptionChange: desc => dispatch(actionCreators.release.product.description.change(desc)),
