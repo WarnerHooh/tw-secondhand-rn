@@ -14,10 +14,11 @@ const styles = StyleSheet.create({
 })
 
 class HomeScreen extends React.Component {
+
   render() {
     return (
       <View style={styles.container}>
-        <Text>Home !</Text>
+        <Text>Home!</Text>
         <Button
           title="Go to Release"
           onPress={() => {
@@ -35,4 +36,6 @@ class HomeScreen extends React.Component {
   }
 }
 
-export default connect()(HomeScreen)
+export default connect(state => ({
+  nav: state.nav
+}))(HomeScreen)

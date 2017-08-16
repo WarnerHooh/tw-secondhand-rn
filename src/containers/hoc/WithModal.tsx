@@ -31,8 +31,13 @@ const styles = StyleSheet.create({
 class WithModal extends React.Component {
 
   onDismiss = () => {
-    const { navigation } = this.props
+    const { navigation, nav } = this.props
     navigation.goBack(null)
+
+    // Go to homepage if dismiss singin
+    if (nav.routes[1].index === 0) {
+      navigation.navigate('home')
+    }
   }
 
   render() {
@@ -50,7 +55,9 @@ class WithModal extends React.Component {
   }
 }
 
-const ConnectedWithModal = connect()(WithModal)
+const ConnectedWithModal = connect(state => ({
+  nav: state.nav
+}))(WithModal)
 
 export const withModal = (outerProps) => (InnerContent) => (
   (props) => (

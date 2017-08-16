@@ -4,8 +4,8 @@ import { Button, FormLabel, FormInput, FormValidationMessage } from 'react-nativ
 import { bindActionCreators, compose } from 'redux'
 import { connect, DispatchProp } from 'react-redux'
 
-import { withModal } from './WithModal'
-import { withLoader } from './WithLoader'
+import { withModal } from '../hoc/WithModal'
+import { withLoader } from '../hoc/WithLoader'
 import { userRegister } from '../../modules/user/actions'
 import colors from '../../common/colors'
 

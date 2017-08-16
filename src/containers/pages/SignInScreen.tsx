@@ -6,8 +6,8 @@ import { connect, DispatchProp } from 'react-redux'
 
 import colors from '../../common/colors'
 
-import { withModal } from './WithModal'
-import { withLoader } from './WithLoader'
+import { withModal } from '../hoc/WithModal'
+import { withLoader } from '../hoc/WithLoader'
 import { userLogin } from '../../modules/user/actions'
 
 const styles = StyleSheet.create({
