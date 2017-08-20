@@ -1,4 +1,5 @@
 import * as React from 'react'
+import * as D from '../../definitions'
 import { StyleSheet, View, Text, Image,ListView } from 'react-native'
 // import { connect, DispatchProp } from 'react-redux'
 import { connect } from 'react-redux'
@@ -36,7 +37,7 @@ const styles = StyleSheet.create({
   }
 })
 
-class HomeScreen extends React.Component<{},{dataSource}> {
+class HomeScreen extends React.Component<{items: D.ProductsState},{dataSource}> {
   constructor() {
     super();
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
@@ -54,7 +55,7 @@ class HomeScreen extends React.Component<{},{dataSource}> {
         renderRow={(rowData) => <View style={styles.rowContainer}>
           <Image style={styles.rowImage}source={require('../../common/assets/avatar.png')}></Image>
           <View style={styles.rowContent}>
-            <Text style={styles.rowName}>TestName</Text>
+            <Text style={styles.rowName}>{this.props.items.available[0].name}</Text>
             <Text style={styles.rowPrice}>$111</Text>
             <Text style={styles.rowAuthor}>Test</Text>
           </View>
@@ -65,5 +66,7 @@ class HomeScreen extends React.Component<{},{dataSource}> {
 }
 
 export default connect(
-  state => ({})
+  state => ({
+    items: state.items
+  })
 )(HomeScreen)

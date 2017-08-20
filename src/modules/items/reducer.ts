@@ -2,7 +2,21 @@ import * as D from '../../definitions'
 import * as Redux from 'redux'
 
 const initialState: D.ProductsState  = {
-    available: [],
+    available: [{
+        name: "string",
+        price: "string",
+        img: "string",
+        description: "string",
+        owner: {
+            username: "string",
+            objectId: "string"
+        },
+        buyer: {
+            username: "string",
+            objectId: "string"
+        },
+        objectId: "string"
+    }],
     owned: [],
     bought: [],
     imageUrl: []
