@@ -33,6 +33,10 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
+  uplaodedImage: {
+    marginTop:10,
+    width: width(80)
+  },
   uploadImage: {
     width: 50,
     height: 50

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Text, View, Image, TextInput, TouchableOpacity } from 'react-native';
+import { Text, View, Image, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { connect } from 'react-redux';
 import { Button } from 'react-native-elements';
 import * as D from '../../../definitions';
@@ -24,14 +24,14 @@ interface ReleaseScreenProps {
 
 class ReleaseScreen extends React.Component<ReleaseScreenProps> {
   render() {
-    const { img } = this.props.product;
+    const { img,name,price,description } = this.props.product;
     const hasValidUploadedImageUrl = img !== undefined && img !== '';
     return (
       <View style={styles.container}>
         <View style={styles.uploadImageContainer}>
           <TouchableOpacity onPress={this.props.onUploadImageClick} style={styles.uploadContainer}>
             {hasValidUploadedImageUrl
-              ? <Image source={{ uri: img }} style={styles.uploadContent} /> :
+              ? <Image source={{ uri: img }} style={[styles.uploadContent, styles.uplaodedImage]} /> :
               <View style={styles.uploadContent}>
                 <Text>点击上传图片</Text>
                 <Image style={styles.uploadImage} source={require('../../../common/assets/arrow_up_upload.png')} />
@@ -41,12 +41,13 @@ class ReleaseScreen extends React.Component<ReleaseScreenProps> {
         </View>
 
         <View style={styles.productDetail}>
-          <TextInput style={styles.input} placeholder="商品名称" onChangeText={this.props.onNameChange} />
-          <TextInput style={styles.input} placeholder="售价￥" onChangeText={this.props.onPriceChange} />
+          <TextInput style={styles.input} placeholder="商品名称" onChangeText={this.props.onNameChange} value={name} />
+          <TextInput style={styles.input} placeholder="售价￥" onChangeText={this.props.onPriceChange} value={price} />
           <TextInput
             style={[styles.input, styles.productDesc]}
             placeholder="添加描述..."
             multiline={true}
+            value={description}
             onChangeText={this.props.onDescriptionChange}
           />
         </View>
@@ -69,11 +70,73 @@ class ReleaseScreen extends React.Component<ReleaseScreenProps> {
   }
 }
 
+interface VerifyResult {
+  result: boolean;
+  message: string;
+}
+
+const isEmpty = (obj: any): boolean => {
+  return obj === undefined || obj === null || obj.toString() === '' || obj.length === 0;
+}
+
+const isMoney = (obj: any): boolean => {
+  return obj !== undefined && /^-?\d*(\.\d+)?$/.test(obj.toString());
+}
+
+const verifyBeforeCreateProductForSale = (product: D.ProductForCreate): VerifyResult => {
+  if (isEmpty(product.img)) {
+    return {
+      result: false,
+      message: 'Please choose the image for your product.'
+    };
+  }
+
+  if (isEmpty(product.name)) {
+    return {
+      result: false,
+      message: 'Please input the name for your product.'
+    };
+  }
+
+  if (isEmpty(product.price)) {
+    return {
+      result: false,
+      message: 'Please input the price for your product.'
+    };
+  }
+
+  if (!isMoney(product.price)) {
+    return {
+      result: false,
+      message: 'The price of product must be a number.'
+    };
+  }
+
+  if (isEmpty(product.description)) {
+    return {
+      result: false,
+      message: 'Please input the description for your product.'
+    };
+  }
+
+  return {
+    result: true,
+    message: undefined
+  };
+}
+
 const createProductForSale = (user: D.User, product: D.ProductForCreate): ((dispatch, getState) => Promise<void>) => {
   return (dispatch, getState) => {
+    const verifyResult = verifyBeforeCreateProductForSale(product);
+    if (!verifyResult.result) {
+      Alert.alert(verifyResult.message);
+      return;
+    }
+
     dispatch(actionCreators.release.product.sale.start());
     return createProduct(product)
       .then((createdProduct: D.Product) => {
+        Alert.alert("Add successfully!");
         dispatch(actionCreators.release.product.sale.success(createdProduct));
       })
       .catch(e => {
