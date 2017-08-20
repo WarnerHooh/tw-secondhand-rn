@@ -1,15 +1,13 @@
 import * as React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
-
+import { StyleSheet, Text, View, Image } from 'react-native'
 import { compose } from 'redux'
 import { connect, DispatchProp } from 'react-redux'
 import { Button } from 'react-native-elements'
 import { NavigationActions } from 'react-navigation'
-
 import * as D from '../../definitions'
-import { userLogin } from '../../modules/user/actions'
-
 import { withAuthorized } from '../hoc/WithAuthorized'
+import { width } from 'react-native-dimension';
+import { userLogout } from '../../modules/user/actions';
 
 export type ProfileProps<S> = DispatchProp<S> & {
   user: D.User
@@ -20,8 +18,52 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
   },
+  header: {
+    height: 50,
+    marginTop: 30,
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+  },
+  title: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    flex: 1,
+  },
+  avart: {
+    width: 60,
+    height: 60
+  },
+  info: {
+    flex: 1,
+    width: width(80),
+    padding: 50,
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#CDCDC3',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 1,
+    elevation: 1,
+  },
+  innerInfo: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  name: {
+    marginLeft: 50
+  },
+  buttons: {
+    marginTop:30,
+    flex: 8,
+    justifyContent:'space-around'
+  },
+  button: {
+    width:200
+  }
 })
 
 class ProfileScreen extends React.Component<ProfileProps<object>, object> {
@@ -33,29 +75,52 @@ class ProfileScreen extends React.Component<ProfileProps<object>, object> {
   render() {
     return (
       <View style={styles.container}>
+        <View style={styles.header}>
+          <Text style={styles.title}>个人信息</Text>
+        </View>
+        <View style={styles.info}>
+          <View style={styles.innerInfo}>
+            <Image style={styles.avart} source={require('../../common/assets/login.png')}></Image>
+            <Text style={styles.name}>{this.props.user.name}</Text>
+          </View>
+        </View>
+        <View style={styles.buttons}>
         <Button
-          title="Login"
-          onPress={() => this.props.dispatch(userLogin({
-              username: 'admin',
-              password: 'admin',
-            }))
-          }
-        />
-        <Text>Profile .... {this.props.user.name ? `This is ${this.props.user.name}` : null} !</Text>
-        <Button
-          title="Go to Home"
-          onPress={() => {
-            this.props.dispatch(NavigationActions.navigate({ routeName: 'home' }))
-            // this.props.navigation.navigate('signin')
-          }}
-        />
-        <Button
-          title="Go Back"
-          onPress={() => {
-            this.props.dispatch(NavigationActions.back())
-          }}
-        />
+            backgroundColor="#FAE05E"
+            color="black"
+            fontWeight="bold"
+            fontSize={14}
+            buttonStyle={styles.button}
+            title="已卖宝贝"
+            onPress={() => {
+              this.props.dispatch(NavigationActions.navigate({ routeName: 'home' }));
+            }}
+          />
 
+          <Button
+            backgroundColor="#FAE05E"
+            color="black"
+            fontWeight="bold"
+            fontSize={14}
+            buttonStyle={styles.button}
+            title="出售宝贝"
+            onPress={() => {
+              this.props.dispatch(NavigationActions.navigate({ routeName: 'home' }));
+            }}
+          />
+
+          <Button
+            backgroundColor="#FAE05E"
+            color="black"
+            fontWeight="bold"
+            fontSize={14}
+            buttonStyle={styles.button}
+            title="退出登录"
+            onPress={() => {
+              this.props.dispatch(userLogout());
+            }}
+          />
+        </View>
       </View>
     )
   }
