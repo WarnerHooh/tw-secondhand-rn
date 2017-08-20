@@ -9,10 +9,6 @@ import { withAuthorized } from '../hoc/WithAuthorized'
 import { width } from 'react-native-dimension';
 import { userLogout } from '../../modules/user/actions';
 
-export type ProfileProps<S> = DispatchProp<S> & {
-  user: D.User
-}
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -57,21 +53,23 @@ const styles = StyleSheet.create({
     marginLeft: 50
   },
   buttons: {
-    marginTop:30,
+    marginTop: 30,
     flex: 8,
-    justifyContent:'space-around'
+    justifyContent: 'space-around'
   },
   button: {
-    width:200
+    width: 200
   }
 })
 
+ type ProfileProps<S> = DispatchProp<S> & {
+  user: D.User,
+  onBoughtProductClick: ()=>void;
+  onSaleProductClick: ()=>void;
+  onLogoutClick: ()=>void;
+}
+
 class ProfileScreen extends React.Component<ProfileProps<object>, object> {
-
-  static navigationOptions = {
-    tabBarVisible: false
-  }
-
   render() {
     return (
       <View style={styles.container}>
@@ -85,16 +83,14 @@ class ProfileScreen extends React.Component<ProfileProps<object>, object> {
           </View>
         </View>
         <View style={styles.buttons}>
-        <Button
+          <Button
             backgroundColor="#FAE05E"
             color="black"
             fontWeight="bold"
             fontSize={14}
             buttonStyle={styles.button}
             title="已卖宝贝"
-            onPress={() => {
-              this.props.dispatch(NavigationActions.navigate({ routeName: 'home' }));
-            }}
+            onPress={this.props.onBoughtProductClick}
           />
 
           <Button
@@ -104,9 +100,7 @@ class ProfileScreen extends React.Component<ProfileProps<object>, object> {
             fontSize={14}
             buttonStyle={styles.button}
             title="出售宝贝"
-            onPress={() => {
-              this.props.dispatch(NavigationActions.navigate({ routeName: 'home' }));
-            }}
+            onPress={this.props.onSaleProductClick}
           />
 
           <Button
@@ -116,9 +110,7 @@ class ProfileScreen extends React.Component<ProfileProps<object>, object> {
             fontSize={14}
             buttonStyle={styles.button}
             title="退出登录"
-            onPress={() => {
-              this.props.dispatch(userLogout());
-            }}
+            onPress={this.props.onLogoutClick}
           />
         </View>
       </View>
@@ -129,9 +121,12 @@ class ProfileScreen extends React.Component<ProfileProps<object>, object> {
 export default compose(
   withAuthorized(),
   connect(
-    state => ({
-      user: state.user,
-      nav: state.nav
-    })
-  ),
+    (state, ownProps) => ({
+      user: state.user
+    }),
+    (dispatch, ownProps) => ({
+      onBoughtProductClick: () => dispatch(NavigationActions.navigate({ routeName: 'home' })),
+      onSaleProductClick: ()=>dispatch(NavigationActions.navigate({ routeName: 'home' })),
+      onLogoutClick: ()=>dispatch(userLogout())
+    }))
 )(ProfileScreen)
