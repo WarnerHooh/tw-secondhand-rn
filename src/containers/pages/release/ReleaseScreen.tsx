@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Text, View, Image, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { connect } from 'react-redux';
+import { NavigationActions } from 'react-navigation'
 import { Button } from 'react-native-elements';
 import * as D from '../../../definitions';
 import styles from './ReleaseScreen.style';
@@ -136,8 +137,8 @@ const createProductForSale = (user: D.User, product: D.ProductForCreate): ((disp
     dispatch(actionCreators.release.product.sale.start());
     return createProduct(product)
       .then((createdProduct: D.Product) => {
-        Alert.alert("Add successfully!");
         dispatch(actionCreators.release.product.sale.success(createdProduct));
+        dispatch(NavigationActions.navigate({ routeName: 'home' }))
       })
       .catch(e => {
         dispatch(actionCreators.release.product.sale.failed(e));
