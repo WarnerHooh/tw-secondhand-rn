@@ -32,13 +32,16 @@ export default handleActions(
     [actionCreators.release.product.description.change]: (state, action) => {
       return merge.recursive(true, state, { product: { description: action.payload } });
     },
-    [actionCreators.release.product.image.picking]: (state, action) => {
+    [actionCreators.release.product.image.pick.picking]: (state, action) => {
       return state;
     },
-    [actionCreators.release.product.image.failed]: (state, action) => {
+    [actionCreators.release.product.image.pick.failed]: (state, action) => {
       return state;
     },
-    [actionCreators.release.product.image.picked]: (state, action) => {
+    [actionCreators.release.product.image.pick.picked]: (state, action) => {
+      return merge.recursive(true, state, { product: { img: action.payload } });
+    },
+    [actionCreators.release.product.image.upload.uploaded]: (state, action) => {
       return merge.recursive(true, state, { product: { img: action.payload } });
     }
   },

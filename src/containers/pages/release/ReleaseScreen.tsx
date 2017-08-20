@@ -10,8 +10,8 @@ import { withModal } from '../../hoc/WithModal';
 import { withLoader } from '../../hoc/WithLoader';
 import { withAuthorized } from '../../hoc/WithAuthorized';
 import actionCreators from '../../../modules/release/action';
-import { create as createProduct } from '../../../apis/products';
-import { ImagePicker } from 'expo';
+import { create as createProduct, uploadImg } from '../../../apis/products';
+import { ImagePicker, FileSystem } from 'expo';
 
 interface ReleaseScreenProps {
   product: D.ProductForCreate;
@@ -25,7 +25,7 @@ interface ReleaseScreenProps {
 
 class ReleaseScreen extends React.Component<ReleaseScreenProps> {
   render() {
-    const { img,name,price,description } = this.props.product;
+    const { img, name, price, description } = this.props.product;
     const hasValidUploadedImageUrl = img !== undefined && img !== '';
     return (
       <View style={styles.container}>
@@ -148,19 +148,29 @@ const createProductForSale = (user: D.User, product: D.ProductForCreate): ((disp
 
 const pickProductImage = (): ((dispatch, getState) => void) => {
   return (dispatch, getState) => {
-    dispatch(actionCreators.release.product.image.picking());
+    dispatch(actionCreators.release.product.image.pick.picking());
     ImagePicker.launchImageLibraryAsync({
       allowsEditing: true,
       aspect: [4, 3],
     }).then(response => {
       if (!response.cancelled) {
-        dispatch(actionCreators.release.product.image.picked(response.uri));
+        dispatch(actionCreators.release.product.image.pick.picked(response.uri));
+        dispatch(uploadProductImage(response.uri));
       } else if (response.uri) {
-        dispatch(actionCreators.release.product.image.failed());
+        dispatch(actionCreators.release.product.image.pick.failed());
       }
     });
   };
 };
+
+const uploadProductImage = (uri: string): ((dispatch, getState) => Promise<void>) => {
+  return (dispatch, getState) => {
+    return uploadImg({uri: uri, type: 'multipart/form-data', name: uri}).then(res => {
+      dispatch(actionCreators.release.product.image.upload.uploaded(res));
+    }).catch(e => {
+    });
+  }
+}
 
 const enhance = compose(
   withAuthorized(),

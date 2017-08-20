@@ -19,9 +19,16 @@ const actionCreators = createActions({
         CHANGE: PAYLOAD_AND_META_CREATOR
       },
       IMAGE: {
-        PICKING: PAYLOAD_AND_META_CREATOR,
-        PICKED: PAYLOAD_AND_META_CREATOR,
-        FAILED: PAYLOAD_AND_META_CREATOR
+        PICK: {
+          PICKING: PAYLOAD_AND_META_CREATOR,
+          PICKED: PAYLOAD_AND_META_CREATOR,
+          FAILED: PAYLOAD_AND_META_CREATOR
+        },
+        UPLOAD: {
+          UPLOADING: PAYLOAD_AND_META_CREATOR,
+          UPLOADED: PAYLOAD_AND_META_CREATOR,
+          FAILED: PAYLOAD_AND_META_CREATOR
+        }
       }
     }
   }
