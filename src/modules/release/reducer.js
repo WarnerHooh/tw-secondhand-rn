@@ -32,8 +32,14 @@ export default handleActions(
     [actionCreators.release.product.description.change]: (state, action) => {
       return merge.recursive(true, state, { product: { description: action.payload } });
     },
-    [actionCreators.release.product.image.uploading]: (state, action) => {
-      return merge.recursive(true, state, { product: action.product });
+    [actionCreators.release.product.image.picking]: (state, action) => {
+      return state;
+    },
+    [actionCreators.release.product.image.failed]: (state, action) => {
+      return state;
+    },
+    [actionCreators.release.product.image.picked]: (state, action) => {
+      return merge.recursive(true, state, { product: { img: action.payload } });
     }
   },
   initialState

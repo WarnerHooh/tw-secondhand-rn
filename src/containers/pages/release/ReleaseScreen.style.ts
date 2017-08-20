@@ -4,11 +4,9 @@ import colors from '../../../common/colors';
 
 export default StyleSheet.create({
   container: {
-    marginTop: 30,
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'flex-start'
+    alignItems: 'center'
   },
   input: {
     borderBottomWidth: 1,
@@ -25,6 +23,9 @@ export default StyleSheet.create({
   uploadContainer: {
     flex: 1
   },
+  uploadImageContainer: {
+    flex: 1.3,
+  },
   uploadContent: {
     backgroundColor: colors.grey4,
     flex: 1,
@@ -38,7 +39,7 @@ export default StyleSheet.create({
   },
   productDetail: {
     paddingTop: 20,
-    flex: 2,
+    flex: 1.5,
     alignItems: 'center'
   },
   productDesc: {
@@ -46,7 +47,7 @@ export default StyleSheet.create({
     height: 150
   },
   releaseBtnContainer: {
-    flex: 1
+    flex: 0.5,
   },
   releaseBtn: {
     width: 200

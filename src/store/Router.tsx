@@ -1,19 +1,13 @@
-import * as React from 'react'
-import { Image, StyleSheet } from 'react-native'
-import {
-  NavigationActions,
-  StackNavigator,
-  TabNavigator,
-} from 'react-navigation'
-
-import colors from '../common/colors'
-
-import HomeScreen from '../containers/pages/HomeScreen'
-import OthersScreen from '../containers/pages/OthersScreen'
-import ProfileScreen from '../containers/pages/ProfileScreen'
-import ReleaseScreen from '../containers/pages/release/ReleaseScreen'
-import SignInScreen from '../containers/pages/SignInScreen'
-import SignUpScreen from '../containers/pages/SignUpScreen'
+import * as React from 'react';
+import { Image, StyleSheet } from 'react-native';
+import { NavigationActions, StackNavigator, TabNavigator } from 'react-navigation';
+import colors from '../common/colors';
+import HomeScreen from '../containers/pages/HomeScreen';
+import OthersScreen from '../containers/pages/OthersScreen';
+import ProfileScreen from '../containers/pages/ProfileScreen';
+import ReleaseScreen from '../containers/pages/release/ReleaseScreen';
+import SignInScreen from '../containers/pages/SignInScreen';
+import SignUpScreen from '../containers/pages/SignUpScreen';
 
 const styles = StyleSheet.create({
   icon: {
@@ -80,42 +74,48 @@ const TabRoute = TabNavigator(
       showLabel: false
     }
   }
-)
+);
 
-const Route = StackNavigator({
-  Root: {
-    screen: TabRoute,
+const Route = StackNavigator(
+  {
+    Root: {
+      screen: TabRoute
+    },
+    signin: {
+      screen: StackNavigator(
+        {
+          signin: {
+            screen: SignInScreen
+          },
+          signup: {
+            screen: SignUpScreen
+          }
+        },
+        {
+          headerMode: 'none',
+          mode: 'modal'
+        }
+      )
+    }
   },
-  signin: {
-    screen: StackNavigator({
-      signin: {
-        screen: SignInScreen,
-      },
-      signup: {
-        screen: SignUpScreen,
-      }
-    }, {
-      headerMode: 'none',
-      mode: 'modal',
-    }),
-  },
-}, {
-  headerMode: 'none',
-  mode: 'modal',
-})
+  {
+    headerMode: 'none',
+    mode: 'modal'
+  }
+);
 
-const initialRouterAction = NavigationActions.init()
+const initialRouterAction = NavigationActions.init();
 
-const initialState = Route.router.getStateForAction(initialRouterAction, null)
+const initialState = Route.router.getStateForAction(initialRouterAction, null);
 
 export const reducer = (state = initialState, action) => {
-  let nextState
+  let nextState;
   // Simply return the original `state` if `nextState` is null or undefined.
   switch (action.type) {
     default:
-      nextState = Route.router.getStateForAction(action, state)
+      nextState = Route.router.getStateForAction(action, state);
   }
-  return nextState || state
-}
+  return nextState || state;
+};
 
-export default Route
+export default Route;

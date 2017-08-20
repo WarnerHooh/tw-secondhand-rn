@@ -23,7 +23,7 @@ const storeConfigure = () => {
         USER_LOGOUT_SUC
     ])
 
-    const createStoreWithMiddleware = applyMiddleware(storeMiddleware, ...middlewares)(createStore)
+    const createStoreWithMiddleware = applyMiddleware(...middlewares, storeMiddleware)(createStore)
     
     const store = createStoreWithMiddleware(reducer, initialState)
     
