@@ -8,7 +8,7 @@ import colors from '../../common/colors'
 
 import { withModal } from '../hoc/WithModal'
 import { withLoader } from '../hoc/WithLoader'
-import { userLogin } from '../../modules/user/actions'
+import { userLogin } from '../../modules/user/action'
 
 const styles = StyleSheet.create({
   container: {

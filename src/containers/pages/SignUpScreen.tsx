@@ -6,7 +6,7 @@ import { connect, DispatchProp } from 'react-redux'
 
 import { withModal } from '../hoc/WithModal'
 import { withLoader } from '../hoc/WithLoader'
-import { userRegister } from '../../modules/user/actions'
+import { userRegister } from '../../modules/user/action'
 import colors from '../../common/colors'
 
 const styles = StyleSheet.create({

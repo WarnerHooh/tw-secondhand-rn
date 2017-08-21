@@ -1,8 +1,8 @@
 export default {
   yellow: '#FAE05E',
+  yellow1: '#F5B353',
   black: '#000000',
   white: '#FFFFFF',
-  yellow: '#FAE05E',
   orange: '#EE5D29',
   blue: '#428BCA',
 

@@ -5,9 +5,11 @@ import { connect, DispatchProp } from 'react-redux'
 import { Button } from 'react-native-elements'
 import { NavigationActions } from 'react-navigation'
 import * as D from '../../definitions'
+import { userLogin } from '../../modules/user/action'
+
 import { withAuthorized } from '../hoc/WithAuthorized'
 import { width } from 'react-native-dimension';
-import { userLogout } from '../../modules/user/actions';
+import { userLogout } from '../../modules/user/action';
 
 const styles = StyleSheet.create({
   container: {
@@ -43,6 +45,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 1,
     elevation: 1,
+    marginTop: 20
   },
   innerInfo: {
     flex: 1,
@@ -73,9 +76,6 @@ class ProfileScreen extends React.Component<ProfileProps<object>, object> {
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.header}>
-          <Text style={styles.title}>个人信息</Text>
-        </View>
         <View style={styles.info}>
           <View style={styles.innerInfo}>
             <Image style={styles.avart} source={require('../../common/assets/login.png')}></Image>
@@ -89,7 +89,7 @@ class ProfileScreen extends React.Component<ProfileProps<object>, object> {
             fontWeight="bold"
             fontSize={14}
             buttonStyle={styles.button}
-            title="已卖宝贝"
+            title="已买宝贝"
             onPress={this.props.onBoughtProductClick}
           />
 
@@ -126,7 +126,7 @@ export default compose(
     }),
     (dispatch, ownProps) => ({
       onBoughtProductClick: () => dispatch(NavigationActions.navigate({ routeName: 'home' })),
-      onSaleProductClick: ()=>dispatch(NavigationActions.navigate({ routeName: 'home' })),
+      onSaleProductClick: ()=>dispatch(NavigationActions.navigate({ routeName: 'owned' })),
       onLogoutClick: ()=>dispatch(userLogout())
     }))
 )(ProfileScreen)

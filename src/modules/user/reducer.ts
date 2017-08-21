@@ -1,7 +1,7 @@
 import * as D from '../../definitions'
 import * as Redux from 'redux'
 
-import { USER_LOGIN_SUC, USER_LOGOUT_SUC } from './actions'
+import { USER_LOGIN_SUC, USER_LOGOUT_SUC } from './action'
 
 const initialState: D.UserState = {
     name: '',

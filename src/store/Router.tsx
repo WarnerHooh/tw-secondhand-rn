@@ -1,13 +1,20 @@
-import * as React from 'react';
-import { Image, StyleSheet } from 'react-native';
-import { NavigationActions, StackNavigator, TabNavigator } from 'react-navigation';
-import colors from '../common/colors';
-import HomeScreen from '../containers/pages/HomeScreen';
-import OthersScreen from '../containers/pages/OthersScreen';
-import ProfileScreen from '../containers/pages/ProfileScreen';
-import ReleaseScreen from '../containers/pages/release/ReleaseScreen';
-import SignInScreen from '../containers/pages/SignInScreen';
-import SignUpScreen from '../containers/pages/SignUpScreen';
+import * as React from 'react'
+import { Image, StyleSheet } from 'react-native'
+import {
+  NavigationActions,
+  StackNavigator,
+  TabNavigator,
+} from 'react-navigation'
+
+import colors from '../common/colors'
+
+import HomeScreen from '../containers/pages/HomeScreen'
+import OwnedScreen from '../containers/pages/OwnedScreen'
+import OthersScreen from '../containers/pages/OthersScreen'
+import ProfileScreen from '../containers/pages/ProfileScreen'
+import ReleaseScreen from '../containers/pages/release/ReleaseScreen'
+import SignInScreen from '../containers/pages/SignInScreen'
+import SignUpScreen from '../containers/pages/SignUpScreen'
 
 const styles = StyleSheet.create({
   icon: {
@@ -25,8 +32,38 @@ const styles = StyleSheet.create({
   circleFocused: {
     borderColor: colors.yellow,
     backgroundColor: colors.yellow
+  },
+  whiteHeader: {
+    backgroundColor: colors.white
   }
 })
+
+const ProfileRoute = StackNavigator(
+  {
+    profile: {
+      screen: ProfileScreen,
+      navigationOptions: {
+        title: '个人信息',
+        headerStyle: styles.whiteHeader,
+        headerBackTitle: null
+      }
+    },
+    owned: {
+      screen: OwnedScreen,
+      navigationOptions: {
+        tabBarVisible: false,
+        title: '出售宝贝',
+        headerStyle: styles.whiteHeader
+      }
+    },
+    bought: {
+      screen: HomeScreen,
+      navigationOptions: {
+        tabBarVisible: false
+      }
+    }
+  }
+)
 
 const TabRoute = TabNavigator(
   {
@@ -50,7 +87,7 @@ const TabRoute = TabNavigator(
       }
     },
     profile: {
-      screen: ProfileScreen,
+      screen: ProfileRoute,
       navigationOptions: {
         tabBarIcon: ({ tintColor, focused }) =>
           <Image source={require('../common/assets/person.png')} style={[styles.icon, { tintColor: tintColor }]} />
