@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { View, Image, Text, StyleSheet } from 'react-native'
+import { View, TouchableHighlight, Image, Text, StyleSheet } from 'react-native'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import colors from '../common/colors'
 
@@ -41,31 +41,35 @@ const styles = StyleSheet.create({
   }
 })
 
-export default ({img, name, price, owner, buyer, objectId}) => (
-  <View style={styles.container}>
-    <View style={styles.inner}>
-      <View style={styles.thumb}>
-        <Image source={{uri: img}} style={styles.pic} />
-      </View>
+export default ({img, name, price, description, owner, buyer, objectId, navigation}) => (
+  <TouchableHighlight onPress={ ()=> {
+    navigation.navigate('product', {img, name, price, description, productId: objectId, owner})
+  }}>
+    <View style={styles.container}>
+      <View style={styles.inner}>
+        <View style={styles.thumb}>
+          <Image source={{uri: img}} style={styles.pic} />
+        </View>
 
-      <View style={styles.detail}>
-        <Text>{name}</Text>
-        <Text style={styles.price}>¥ {price}</Text>
-        {
-          buyer
-          ? <Text>
-              <FontAwesome name="user" style={styles.icon} />
-              <Text style={styles.user}> {buyer.username}</Text>
-            </Text>
-          : null
-        }
-        <Text>{buyer ? '交易关闭' : '出售中'}</Text>
+        <View style={styles.detail}>
+          <Text>{name}</Text>
+          <Text style={styles.price}>¥ {price}</Text>
+          {
+            buyer
+            ? <Text>
+                <FontAwesome name="user" style={styles.icon} />
+                <Text style={styles.user}> {buyer.username}</Text>
+              </Text>
+            : null
+          }
+          <Text>{buyer ? '交易关闭' : '出售中'}</Text>
+        </View>
       </View>
+      {
+        buyer
+        ? <View style={styles.overlay} />
+        : null
+      }
     </View>
-    {
-      buyer
-      ? <View style={styles.overlay} />
-      : null
-    }
-  </View>
+  </TouchableHighlight>
 )

@@ -9,6 +9,7 @@ import {
 import colors from '../common/colors'
 
 import HomeScreen from '../containers/pages/HomeScreen'
+import ProductScreen from '../containers/pages/ProductScreen'
 import OwnedScreen from '../containers/pages/OwnedScreen'
 import OthersScreen from '../containers/pages/OthersScreen'
 import ProfileScreen from '../containers/pages/ProfileScreen'
@@ -65,10 +66,31 @@ const ProfileRoute = StackNavigator(
   }
 )
 
-const TabRoute = TabNavigator(
+const HomeRoute = StackNavigator(
   {
     home: {
       screen: HomeScreen,
+      navigationOptions: {
+        title: '精选',
+        headerStyle: styles.whiteHeader,
+        headerBackTitle: null
+      }
+    },
+    product: {
+      screen: ProductScreen,
+      navigationOptions: {
+        tabBarVisible: false,
+        title: '商品详情',
+        headerStyle: styles.whiteHeader
+      }
+    }
+  }
+)
+
+const TabRoute = TabNavigator(
+  {
+    home: {
+      screen: HomeRoute,
       navigationOptions: {
         tabBarIcon: ({ tintColor }) =>
           <Image source={require('../common/assets/home.png')} style={[styles.icon, { tintColor: tintColor }]} />

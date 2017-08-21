@@ -25,19 +25,17 @@ class OwnedScreen extends React.Component {
     }
   }
 
-  componentWillReceiveProps() {
-
-  }
-
   keyExtractor = (item, index) => item.objectId
 
   render () {
+    const { owned, navigation } = this.props
+
     return (
       <View style={styles.container}>
         <FlatList
-          data={this.props.owned}
+          data={owned}
           keyExtractor={this.keyExtractor}
-          renderItem={({item}) => <ListItem {...item} key={item.objectId} />}
+          renderItem={({item}) => <ListItem {...item} key={item.objectId} navigation={navigation} />}
         />
       </View>
     )
