@@ -8,6 +8,7 @@ import * as D from '../../definitions'
 import { userLogin } from '../../modules/user/action'
 
 import { withAuthorized } from '../hoc/WithAuthorized'
+import { withFocused } from '../hoc/WithFocused'
 import { width } from 'react-native-dimension';
 import { userLogout } from '../../modules/user/action';
 
@@ -74,6 +75,7 @@ const styles = StyleSheet.create({
 
 class ProfileScreen extends React.Component<ProfileProps<object>, object> {
   render() {
+    console.log(this.props.isFocused)
     return (
       <View style={styles.container}>
         <View style={styles.info}>
@@ -119,6 +121,7 @@ class ProfileScreen extends React.Component<ProfileProps<object>, object> {
 }
 
 export default compose(
+  withFocused(),
   withAuthorized(),
   connect(
     (state, ownProps) => ({

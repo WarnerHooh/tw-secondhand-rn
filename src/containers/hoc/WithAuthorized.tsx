@@ -11,17 +11,10 @@ const styles = StyleSheet.create({
 class WithAuthorized extends React.Component {
 
   componentWillReceiveProps(nextProps) {
-    const { user } = nextProps
+    const { user, isFocused } = nextProps
 
     if (!user.sessionToken) {
-      const nav = this.props.nav
-      const nextNav = nextProps.nav
-
-      const tabRoute = nav.routes[0]
-      const nextTabRoute = nextNav.routes[0]
-
-      if (tabRoute.index !== nextTabRoute.index
-        && (nextTabRoute.routes[nextTabRoute.index].routeName === this.props.navigation.state.routeName)) {
+      if (!this.props.isFocused && isFocused) {
         this.props.navigation.navigate('signin')
       }
     }

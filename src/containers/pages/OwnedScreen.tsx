@@ -1,9 +1,10 @@
 import * as React from 'react'
 import { View, Text, FlatList, StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
+import { bindActionCreators, compose } from 'redux'
 import { getOwnedProducts } from '../../modules/product/action'
 import ListItem from '../../components/OwnedListItem'
+import { withFocused } from '../hoc/WithFocused'
 
 import colors from '../../common/colors'
 
@@ -24,6 +25,10 @@ class OwnedScreen extends React.Component {
     }
   }
 
+  componentWillReceiveProps() {
+
+  }
+
   keyExtractor = (item, index) => item.objectId
 
   render () {
@@ -39,10 +44,13 @@ class OwnedScreen extends React.Component {
   }
 }
 
-export default connect(
-  state => ({
-    owned: state.product.owned,
-    user: state.user
-  }),
-  dispatch => ({ getOwnedProductsAction: bindActionCreators(getOwnedProducts, dispatch) })
+export default compose(
+  withFocused(),
+  connect(
+    state => ({
+      owned: state.product.owned,
+      user: state.user
+    }),
+    dispatch => ({ getOwnedProductsAction: bindActionCreators(getOwnedProducts, dispatch) })
+  )
 )(OwnedScreen)

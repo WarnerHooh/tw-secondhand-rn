@@ -9,6 +9,7 @@ import { compose } from 'redux';
 import { withModal } from '../../hoc/WithModal';
 import { withLoader } from '../../hoc/WithLoader';
 import { withAuthorized } from '../../hoc/WithAuthorized';
+import { withFocused } from '../../hoc/WithFocused'
 import actionCreators from '../../../modules/release/action';
 import { create as createProduct, uploadImg } from '../../../apis/products';
 import { ImagePicker, FileSystem } from 'expo';
@@ -173,6 +174,7 @@ const uploadProductImage = (uri: string): ((dispatch, getState) => Promise<void>
 }
 
 const enhance = compose(
+  withFocused(),
   withAuthorized(),
   withLoader(),
   withModal({ title: '发布宝贝' }),
