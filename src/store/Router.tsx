@@ -11,6 +11,8 @@ import colors from '../common/colors'
 import HomeScreen from '../containers/pages/HomeScreen'
 import ProductScreen from '../containers/pages/ProductScreen'
 import OwnedScreen from '../containers/pages/OwnedScreen'
+import BoughtScreen from '../containers/pages/BoughtScreen'
+import ProductListScreen from '../containers/pages/ProductListScreen'
 import OthersScreen from '../containers/pages/OthersScreen'
 import ProfileScreen from '../containers/pages/ProfileScreen'
 import ReleaseScreen from '../containers/pages/release/ReleaseScreen'
@@ -58,9 +60,11 @@ const ProfileRoute = StackNavigator(
       }
     },
     bought: {
-      screen: HomeScreen,
+      screen: BoughtScreen,
       navigationOptions: {
-        tabBarVisible: false
+        tabBarVisible: false,
+        title: '已买宝贝',
+        headerStyle: styles.whiteHeader
       }
     }
   }
@@ -69,7 +73,7 @@ const ProfileRoute = StackNavigator(
 const HomeRoute = StackNavigator(
   {
     home: {
-      screen: HomeScreen,
+      screen: ProductListScreen,
       navigationOptions: {
         title: '精选',
         headerStyle: styles.whiteHeader,

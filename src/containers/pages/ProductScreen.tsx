@@ -2,9 +2,12 @@ import * as React from 'react'
 import { View, Text, Image, StyleSheet } from 'react-native'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import { Button } from 'react-native-elements'
-import { connect } from 'react-redux'
-import { bindActionCreators, compose } from 'redux'
+import { connect, DispatchProp } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import { buyProduct } from '../../modules/product/action'
+import { NavigationActions } from 'react-navigation'
+
+import { User } from '../../definitions'
 
 import colors from '../../common/colors'
 
@@ -55,11 +58,26 @@ const styles = StyleSheet.create({
 
 })
 
-class ProductScreen extends React.Component {
+type Props<S> = DispatchProp<S> & {
+  user: User,
+  buyProductAction: Function,
+  goSignIn: Function,
+}
+
+class ProductScreen extends React.Component<Props<Object>, {}> {
+
+  handleProductBuy = (productId) => () => {
+    const { user, buyProductAction, goSignIn } = this.props
+    if (user.sessionToken && productId) {
+      buyProductAction(productId)
+    } else {
+      goSignIn()
+    }
+  }
 
   render () {
 
-    const { navigation, buyProductAction } = this.props
+    const { navigation } = this.props
 
     const { params: { img, name, price, description, productId, owner } } = navigation.state
 
@@ -87,9 +105,7 @@ class ProductScreen extends React.Component {
           color={colors.black}
           backgroundColor={colors.yellow}
           style={styles.button}
-          onPress={() => {
-            buyProductAction({productId})
-          }}
+          onPress={this.handleProductBuy(productId)}
         />
       </View>
     )
@@ -98,6 +114,10 @@ class ProductScreen extends React.Component {
 
 export default connect(
   state => ({
+    user: state.user
   }),
-  dispatch => ({ buyProductAction: bindActionCreators(buyProduct, dispatch) })
+  dispatch => ({ 
+    buyProductAction: bindActionCreators(buyProduct, dispatch),
+    goSignIn: () => dispatch(NavigationActions.navigate({ routeName: 'signin' }))
+  })
 )(ProductScreen)

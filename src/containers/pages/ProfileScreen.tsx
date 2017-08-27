@@ -75,7 +75,6 @@ const styles = StyleSheet.create({
 
 class ProfileScreen extends React.Component<ProfileProps<object>, object> {
   render() {
-    console.log(this.props.isFocused)
     return (
       <View style={styles.container}>
         <View style={styles.info}>
@@ -128,8 +127,8 @@ export default compose(
       user: state.user
     }),
     (dispatch, ownProps) => ({
-      onBoughtProductClick: () => dispatch(NavigationActions.navigate({ routeName: 'home' })),
-      onSaleProductClick: ()=>dispatch(NavigationActions.navigate({ routeName: 'owned' })),
-      onLogoutClick: ()=>dispatch(userLogout())
+      onBoughtProductClick: () => dispatch(NavigationActions.navigate({ routeName: 'bought' })),
+      onSaleProductClick: () => dispatch(NavigationActions.navigate({ routeName: 'owned' })),
+      onLogoutClick: () => dispatch(userLogout())
     }))
 )(ProfileScreen)

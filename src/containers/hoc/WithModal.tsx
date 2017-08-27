@@ -35,7 +35,7 @@ class WithModal extends React.Component {
     navigation.goBack(null)
 
     // Go to homepage if dismiss singin
-    if (nav.routes[1] && nav.routes[1].index === 0) {
+    if (nav.routes[0].index !== 0 && nav.routes[1] && nav.routes[1].index === 0) {
       navigation.navigate('home')
     }
   }

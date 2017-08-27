@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { connect, DispatchProp } from 'react-redux'
 
-export const withFocused = (outerProps) => (InnerContent) => {
+export const withFocused = (outerProps?) => (InnerContent) => {
 
   class WithFocused extends React.Component {
 
@@ -19,7 +19,7 @@ export const withFocused = (outerProps) => (InnerContent) => {
       const tabRoute = nav.routes[0]
       const nextTabRoute = nextNav.routes[0]
 
-      if (tabRoute.index !== nextTabRoute.index
+      if ((tabRoute.index !== nextTabRoute.index || (tabRoute.index === 0 && nextTabRoute.index === 0))
         && (nextTabRoute.routes[nextTabRoute.index].routeName === this.props.navigation.state.routeName)) {
         this.setState({
           isFocused: true

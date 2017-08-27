@@ -11,6 +11,7 @@ export interface App {
 
 export interface User {
     name: string
+    sessionToken?: string
 }
 
 export interface UserProfile {

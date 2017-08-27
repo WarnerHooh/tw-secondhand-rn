@@ -30,18 +30,24 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     paddingVertical: 6
   },
+  goods: {
+    fontSize: 20,
+  },
   icon: {
     color: colors.yellow1
   },
   user: {
-    paddingLeft: 200
+    paddingLeft: 200,
+    color: colors.grey2
   },
   price: {
-    color: colors.yellow1
+    color: colors.orange,
+    fontWeight: 'bold',
+    fontSize: 18,
   }
 })
 
-export default ({img, name, price, description, owner, buyer, objectId, navigation}) => (
+export default ({img, name, price, description, owner, objectId, navigation}) => (
   <View style={styles.container}>
     <View style={styles.inner}>
       <View style={styles.thumb}>
@@ -49,23 +55,17 @@ export default ({img, name, price, description, owner, buyer, objectId, navigati
       </View>
 
       <View style={styles.detail}>
-        <Text>{name}</Text>
+        <Text style={styles.goods}>{name}</Text>
         <Text style={styles.price}>¥ {price}</Text>
         {
-          buyer
+          owner
           ? <Text>
               <FontAwesome name="user" style={styles.icon} />
-              <Text style={styles.user}> {buyer.username}</Text>
+              <Text style={styles.user}>  {owner.username}</Text>
             </Text>
           : null
         }
-        <Text>{buyer ? '交易关闭' : '出售中'}</Text>
       </View>
     </View>
-    {
-      buyer
-      ? <View style={styles.overlay} />
-      : null
-    }
   </View>
 )

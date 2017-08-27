@@ -1,11 +1,11 @@
 import * as React from 'react'
-import { View, Text, FlatList, StyleSheet } from 'react-native'
+import { View, FlatList, StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators, compose } from 'redux'
-import { getBoughtProducts } from '../../modules/product/action'
-import ListItem from '../../components/BoughtListItem'
+import { getProducts } from '../../modules/product/action'
+import ListItem from '../../components/ProductListItem'
 import { withFocused } from '../hoc/WithFocused'
-import { User } from '../../definitions'
+import { Product } from '../../definitions'
 
 import colors from '../../common/colors'
 
@@ -17,32 +17,33 @@ const styles = StyleSheet.create({
 })
 
 interface Props {
-  user: User,
+  products: Array<Product>,
   navigation: object,
-  bought: Array<object>,
-  getBoughtProductsAction: Function,
+  getProductsAction: Function,
+  isFocused: boolean,
 }
 
-class BoughtScreen extends React.Component<Props, {}> {
+class OwnedScreen extends React.Component<Props, {}> {
 
   componentDidMount() {
-    const { user, getBoughtProductsAction } = this.props
+    this.props.getProductsAction()
+  }
 
-    if (user.sessionToken) {
-      getBoughtProductsAction()
+  componentWillReceiveProps(nextProps: Props) {
+    if (!this.props.isFocused && nextProps.isFocused) {
+      nextProps.getProductsAction()
     }
   }
 
   keyExtractor = (item, index) => item.objectId
 
   render () {
-    console.log(this.props)
-    const { bought, navigation } = this.props
+    const { products, navigation } = this.props
 
     return (
       <View style={styles.container}>
         <FlatList
-          data={bought}
+          data={products}
           keyExtractor={this.keyExtractor}
           renderItem={({item}) => <ListItem {...item} key={item.objectId} navigation={navigation} />}
         />
@@ -55,9 +56,9 @@ export default compose(
   withFocused(),
   connect(
     state => ({
-      bought: state.product.bought,
+      products: state.product.available,
       user: state.user
     }),
-    dispatch => ({ getBoughtProductsAction: bindActionCreators(getBoughtProducts, dispatch) })
+    dispatch => ({ getProductsAction: bindActionCreators(getProducts, dispatch) })
   )
-)(BoughtScreen)
+)(OwnedScreen)

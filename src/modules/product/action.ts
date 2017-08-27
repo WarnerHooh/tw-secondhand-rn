@@ -1,4 +1,5 @@
 import { Epic } from 'redux-most'
+import { NavigationActions } from 'react-navigation'
 
 import * as D from '../../definitions'
 import { queryAvailable, queryOwned , queryBought , buy, uploadImg, create } from '../../apis/products'
@@ -34,7 +35,8 @@ export const createProduct =
 export const clearProducts = (): D.UserAction => ({ type: CLEAR_PRODUCTS })
 
 const sucCallback = (store) => {
-  store.dispatch(getProducts())
+  // store.dispatch(getProducts())
+  store.dispatch(NavigationActions.navigate({ routeName: 'home' }))
 }
 
 const queryAvailableEpic: Epic<D.GeneralAction> = epicCreator(GET_PRODUCTS, queryAvailable)
